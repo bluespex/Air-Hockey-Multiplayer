@@ -7,20 +7,20 @@ import random
 from config import *
 
 player_score = 0
-opponent_score = 0;
+opponent_score = 0
 
 
 class Ball:
     global player_score, opponent_score
 
     def __init__(self):
-        self.body = pygame.Rect(screen_width / 2 - 10, screen_height / 2 - 10, 20, 20)
-        self.ball_speed_x = 3 * random.choice((1, -1))
-        self.ball_speed_y = 3 * random.choice((1, -1))
+        self.body = pygame.Rect(screen_width / 2 - 10, screen_height / 2 - 10, 15, 15)
+        self.ball_speed_x = 2 * random.choice((1, -1))
+        self.ball_speed_y = 2 * random.choice((1, -1))
 
 
     def ball_animation(self):
-        global score_time
+        global score_time , player_score , opponent_score
         self.body.x += self.ball_speed_x
         self.body.y += self.ball_speed_y
 
@@ -28,29 +28,31 @@ class Ball:
             self.ball_speed_y *= -1
 
         # Player Score
-        if self.body.left <= 0.1:
-
+        if self.body.left <= 0.2:
+            self.ball_speed_x *= -1
             if self.body.bottom <= goal_top or self.body.top >= goal_bottom:
-                self.ball_speed_x *= -1
+                # self.ball_speed_x *= -1
+                pass
             else:
                 # pygame.mixer.Sound.play(score_sound)
-                player_score += 1
                 print("player_score")
-                self.body.center = (screen_width/2, screen_height/2)
+                player_score += 1
+                # self.body.center = (screen_width/2, screen_height/2)
                 return
 
         # Opponent Score
-        if self.body.right >= screen_width-0.1:
-            # self.ball_speed_x *= -1
+        if self.body.right >= screen_width-0.2:
+            self.ball_speed_x *= -1
 
             if self.body.bottom <= goal_top or self.body.top >= goal_bottom:
                 # pygame.mixer.Sound.play(plob_sound)
-                self.ball_speed_x *= -1
+                # self.ball_speed_x *= -1
+                pass
             else:
                 # pygame.mixer.Sound.play(score_sound)
                 print("opponent_score")
                 opponent_score += 1
-                self.body.center = (screen_width/2, screen_height/2)
+                # self.body.center = (screen_width/2, screen_height/2)
                 return
 
 
@@ -63,8 +65,10 @@ class Ball:
                 player_mid = (player.top+player.bottom)/2
                 gradient = 2*abs(player_mid-ball_mid)
                 gradient /= player_mid
-                self.ball_speed_y = gradient*10
+                self.ball_speed_y = gradient*3
                 self.ball_speed_y += 0.5
+                # self.ball_speed_y *= -1
+
             elif abs(self.body.bottom - player.top) < 10 and self.ball_speed_y > 0:
                 self.ball_speed_y *= -1
             elif abs(self.body.top - player.bottom) < 10 and self.ball_speed_y < 0:
@@ -135,11 +139,14 @@ class Server():
                         pass
 
     def setNewState(self, state, client):
+        global player_score,opponent_score
+        state['score'] = [player_score , opponent_score]
         for cl in self.clients:
             if(cl['client'] != client):
                 state['opponent'] = cl['data']['player_body']
 
         state['ball'] = self.ball.body
+        # print(state['score'])
 
         return state
 

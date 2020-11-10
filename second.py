@@ -161,6 +161,7 @@ class Player:
         self.client.state['player_body'] = self.body
 
     def render(self):
+        global player_score,opponent_score
         if 'opponent' in self.client.state:
             pygame.draw.rect(screen, (223, 87, 14), self.client.state['opponent'])
 
@@ -169,7 +170,8 @@ class Player:
             if(self.client.state['ball'].colliderect(self.body)):
                 pygame.mixer.Sound.play(plob_sound)
 
-        
+        if 'score' in self.client.state:
+            player_score,opponent_score = self.client.state['score']        
             
         self.client.sendStatus()
         pygame.draw.rect(screen, (223, 87, 14), self.body)
