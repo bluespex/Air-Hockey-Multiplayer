@@ -35,6 +35,7 @@ class Ball:
                 pass
             else:
                 # pygame.mixer.Sound.play(score_sound)
+                self.body.center = (screen_width/2, screen_height/2)
                 print("player_score")
                 player_score += 1
                 # self.body.center = (screen_width/2, screen_height/2)
@@ -50,6 +51,7 @@ class Ball:
                 pass
             else:
                 # pygame.mixer.Sound.play(score_sound)
+                self.body.center = (screen_width/2, screen_height/2)
                 print("opponent_score")
                 opponent_score += 1
                 # self.body.center = (screen_width/2, screen_height/2)
@@ -65,7 +67,7 @@ class Ball:
                 player_mid = (player.top+player.bottom)/2
                 gradient = 2*abs(player_mid-ball_mid)
                 gradient /= player_mid
-                self.ball_speed_y = gradient*3
+                self.ball_speed_y = gradient*2
                 self.ball_speed_y += 0.5
                 # self.ball_speed_y *= -1
 
