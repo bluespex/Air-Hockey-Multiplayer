@@ -210,7 +210,7 @@ clock = pygame.time.Clock()
 
 # Main Window
 screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption('Pong')
+pygame.display.set_caption('Player 1')
 
 # Colors
 # light_grey = (200, 200, 200)
