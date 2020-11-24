@@ -109,7 +109,7 @@ class Server():
                 pass
 
     def aceptarCon(self):
-        print("AceptarCon iniciado")
+        print("accepting connections started")
         while True:
             try:
                 conn, addr = self.sock.accept()
@@ -118,12 +118,12 @@ class Server():
                     'client': conn,
                     'data': {}
                 })
-                print("Se conecto un jugador: ", addr)
+                print("A player logged in: ", addr)
             except:
                 pass
 
     def processarCon(self):
-        print("ProcessarCon iniciado")
+        print("processing connections started")
         while True:
             if len(self.clients) > 0:
                 for c in self.clients:

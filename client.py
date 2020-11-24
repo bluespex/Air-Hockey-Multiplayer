@@ -9,7 +9,6 @@ class Client:
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.connect((str(host), int(port)))
 
-        # Hilo que recibe los mensajes
         msg_recv = threading.Thread(target=self.recvData)
         msg_recv.daemon = True
         msg_recv.start()
@@ -19,7 +18,6 @@ class Client:
             # 'opponent': []
         }
 
-    # Funcion pendiente de los mensajes que se reciben
     def recvData(self):
         while True:
             try:
@@ -29,7 +27,6 @@ class Client:
             except:
                 pass
 
-    # Funcion que enviara los mensajes
     def sendStatus(self):
         self.sock.send(pickle.dumps(self.state))
 
